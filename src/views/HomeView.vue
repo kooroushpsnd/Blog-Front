@@ -3,7 +3,7 @@
     <v-alert border="left" close-text="Close Alert" color="green accent-4" dark dismissible v-if="$route.params.message">
       {{ $route.params.message }}
     </v-alert>
-    <v-row no-gutters>
+    <v-row no-gutters v-if="posts.length > 0">
       <v-col sm="4" class="pa-3" v-for="post in posts" :key="post._id">
         <v-card class="pa-1" :to="{ name: 'post' ,params: {title: post.title} }">
           <v-img height="250" :src="`http://localhost:5000/uploads/${post.image}`"></v-img>
@@ -24,7 +24,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { getAllBlogs ,getBlog } from '@/apiBlogs';
+import { getAllBlogs } from '@/apiBlogs';
 
 export default defineComponent({
   name: 'HomeView',

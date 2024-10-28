@@ -10,8 +10,8 @@
                             <VBtn small outlined color="primary">{{ post.category }}</VBtn>
                         </v-col>
                         <v-col sm="10" class="d-flex justify-end">
-                            <VBtn color="success" text>Edit</VBtn>
-                            <VBtn color="red" text>Delete</VBtn>
+                            <VBtn color="success" text :to="{ name:'edit-post' ,params: {title:post.title}}">Edit</VBtn>
+                            <VBtn color="red" text @click="removeBlog(post.title)">Delete</VBtn>
                         </v-col>
                     </v-row>
                 </v-card-actions>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getBlog } from '@/apiBlogs';
+import { deleteBlog, getBlog } from '@/apiBlogs';
 import { VBtn } from 'vuetify/components';
 
 export default {
@@ -42,6 +42,12 @@ export default {
     async created(){
         const res = await getBlog(this.$route.params.title)
         this.post = res
+    },
+    methods: {
+        async removeBlog(title){
+            await deleteBlog(title)
+            this.$router.push({ name: 'HomeView' ,params: {message : `${title} got deleted successfully`}})
+        }
     }
 }
 </script>

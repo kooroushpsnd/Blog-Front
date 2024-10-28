@@ -4,6 +4,7 @@ const url = "http://localhost:5000/blogs"
 
 exports.getAllBlogs = async() => {
     const res = await axios.get(url)
+    if (res.data.Blogs == "no Blog exist") return []
     return res.data.Blogs
 }
 
@@ -17,10 +18,12 @@ exports.createBlog = async(post) => {
     return res.data
 }
 
-exports.updateBlog = async() => {
-    const res = await axios.get(url)
+exports.updateBlog = async(title ,post) => {
+    const res = await axios.patch(`${url}/${title}` ,post)
+    return res.data.blog
 }
 
-exports.deleteBlog = async() => {
-    const res = await axios.get(url)
+exports.deleteBlog = async(title) => {
+    const res = await axios.delete(`${url}/${title}`)
+    return res.Btitle
 }
